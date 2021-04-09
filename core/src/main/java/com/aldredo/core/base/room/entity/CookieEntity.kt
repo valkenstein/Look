@@ -5,7 +5,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(indices = [Index(value = arrayOf("barcode"), unique = true)])
-data class CellsEntity(
+data class CookieEntity(
     @PrimaryKey()
     val barcode: String = "",
     val type: String = "",

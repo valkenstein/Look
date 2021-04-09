@@ -1,8 +1,8 @@
 package com.aldredo.core.base.di
 
 import android.app.Application
-import com.aldredo.core.base.network.SwitchServer
 import com.aldredo.core.base.room.AppDatabase
+import com.aldredo.core.base.util.CookieModel
 import dagger.BindsInstance
 import dagger.Component
 import retrofit2.Retrofit
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         OkHttpClientModule::class,
-        ManagerModule::class,
+        CookieModule::class,
         DataBaseRoom::class]
 )
 interface CoreComponent {
@@ -20,9 +20,7 @@ interface CoreComponent {
 
     fun provideRoom(): AppDatabase
 
-    fun provideManagerToken(): IManagerInfoDevice
-
-    fun provideSwitchServer(): SwitchServer
+    fun provideCookieModel(): CookieModel
 
     companion object {
         fun create(context: Application) =

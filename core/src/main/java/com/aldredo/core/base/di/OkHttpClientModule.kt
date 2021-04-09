@@ -1,7 +1,6 @@
 package com.aldredo.core.base.di
 
 import com.aldredo.core.base.interceptor.ApiInterceptor
-import com.aldredo.core.base.network.SwitchServer
 import dagger.Module
 import dagger.Provides
 import okhttp3.Dispatcher
@@ -34,28 +33,13 @@ class OkHttpClientModule {
     @Singleton
     fun provideRetrofit(okHttpClientAuth: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl(DOMAIN + PATH)
+            .baseUrl(DOMAIN)
             .client(okHttpClientAuth)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
 
-
     companion object {
-        private const val DOMAIN = "https://app.05.ru/"
-        private var SERVER = "dev/"
-        private const val SERVER_PRODUCTION = "prod/"
-        private const val TEST_SERVER = "dev/"
-        private var PATH = "wms/${SERVER}"
-
-        fun switchProductionServer() {
-            SERVER = SERVER_PRODUCTION
-            PATH = "wms/${SERVER}"
-        }
-
-        fun switchTestServer() {
-            SERVER = TEST_SERVER
-            PATH = "wms/${SERVER}"
-        }
+        private const val DOMAIN = "https://development.lookit.hk/api/test"
     }
 }

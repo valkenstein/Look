@@ -2,11 +2,10 @@ package com.aldredo.core.base.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.aldredo.core.base.room.entity.CellsEntity
-
+import com.aldredo.core.base.room.entity.CookieEntity
 
 @Database(
-    entities = [ CellsEntity::class],
+    entities = [ CookieEntity::class],
     version = 1,
     exportSchema = false
 )
