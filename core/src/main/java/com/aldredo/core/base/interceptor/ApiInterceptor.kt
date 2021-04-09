@@ -1,6 +1,6 @@
 package com.aldredo.core.base.interceptor
 
-import com.aldredo.core.base.util.CookieModel
+import com.aldredo.core.base.interceptor.model.CookieModel
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

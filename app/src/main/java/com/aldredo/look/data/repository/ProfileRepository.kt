@@ -7,7 +7,8 @@ import java.lang.Exception
 class ProfileRepository(private val profileApi: ProfileApi) {
     fun getProfileScreen(): StateProfile {
         return try {
-            StateProfile.Result
+           return TODO()
+            //StateProfile.Result("")
         } catch (e: Exception) {
             StateProfile.Error(e.message.toString())
         }

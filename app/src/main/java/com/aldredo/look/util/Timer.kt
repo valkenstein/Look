@@ -2,7 +2,8 @@ package com.aldredo.look.util
 
 import kotlinx.coroutines.*
 
-class Timer {
+class Timer(private val second: Long) {
+    private var pause = false
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.Default + job)
     private var subscriber: TimerSubscriber? = null
@@ -15,33 +16,27 @@ class Timer {
         subscriber = null
     }
 
-    private fun startCoroutineTimer(
-        delayMillis: Long = 0,
-        repeatMillis: Long = 0,
-        action: () -> Unit
-    ) = scope.launch(Dispatchers.IO) {
-        delay(delayMillis)
-        if (repeatMillis > 0) {
-            while (true) {
-                action()
-                delay(repeatMillis)
+    private fun startCoroutineTimer() = scope.launch {
+        while (true) {
+            scope.launch(Dispatchers.Main) {
+                subscriber?.tick()
             }
-        } else {
-            action()
-        }
-    }
-
-    private val timer: Job = startCoroutineTimer(delayMillis = 0, repeatMillis = 1000) {
-        scope.launch(Dispatchers.Main) {
-            subscriber?.tick()
+            delay(second * 1000)
         }
     }
 
     fun startTimer() {
-        timer.start()
+        startCoroutineTimer()
     }
 
     fun cancelTimer() {
-        timer.cancel()
+        scope.coroutineContext.cancelChildren()
     }
+
+    fun pause() {
+        pause = true
+        scope.coroutineContext.cancelChildren()
+    }
+
+    fun isPause() = pause
 }

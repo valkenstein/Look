@@ -1,6 +1,6 @@
 package com.aldredo.core.base.di
 
-import com.aldredo.core.base.util.CookieModel
+import com.aldredo.core.base.interceptor.model.CookieModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

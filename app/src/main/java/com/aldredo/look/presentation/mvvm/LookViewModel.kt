@@ -9,6 +9,6 @@ class LookViewModel : ViewModel() {
     }
 
     private fun checkStateServer(): Boolean {
-
+        TODO()
     }
 }

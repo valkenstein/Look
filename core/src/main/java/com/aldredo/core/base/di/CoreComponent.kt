@@ -2,7 +2,7 @@ package com.aldredo.core.base.di
 
 import android.app.Application
 import com.aldredo.core.base.room.AppDatabase
-import com.aldredo.core.base.util.CookieModel
+import com.aldredo.core.base.interceptor.model.CookieModel
 import dagger.BindsInstance
 import dagger.Component
 import retrofit2.Retrofit
