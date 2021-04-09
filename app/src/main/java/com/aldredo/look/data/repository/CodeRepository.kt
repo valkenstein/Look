@@ -3,8 +3,9 @@ package com.aldredo.look.data.repository
 import com.aldredo.look.data.api.CodeApi
 import com.aldredo.look.domain.state.StateCode
 import java.lang.Exception
+import javax.inject.Inject
 
-class CodeRepository(private val codeApi: CodeApi) {
+class CodeRepository @Inject constructor(private val codeApi: CodeApi) {
     fun putCode(code: String): StateCode {
         return try {
 
