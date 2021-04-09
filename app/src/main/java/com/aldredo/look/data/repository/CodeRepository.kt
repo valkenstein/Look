@@ -6,7 +6,7 @@ import java.lang.Exception
 import javax.inject.Inject
 
 class CodeRepository @Inject constructor(private val codeApi: CodeApi) {
-    fun putCode(code: String): StateCode {
+    suspend fun putCode(code: String): StateCode {
         return try {
 
             StateCode.Result

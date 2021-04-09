@@ -6,7 +6,7 @@ import java.lang.Exception
 import javax.inject.Inject
 
 class StateServerRepository @Inject constructor(private val pingApi: PingApi) {
-    fun checkStateServer(): StateServer {
+    suspend fun checkStateServer(): StateServer {
         return try {
             StateServer.Result
         } catch (e: Exception) {

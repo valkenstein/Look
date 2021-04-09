@@ -6,7 +6,7 @@ import java.lang.Exception
 import javax.inject.Inject
 
 class ProfileRepository @Inject constructor (private val profileApi: ProfileApi) {
-    fun getProfileScreen(): StateProfile {
+    suspend fun getProfileScreen(): StateProfile {
         return try {
            return TODO()
             //StateProfile.Result("")
