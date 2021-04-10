@@ -7,9 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(indices = [Index(value = arrayOf("barcode"), unique = true)])
 data class CookieEntity(
     @PrimaryKey()
-    val barcode: String = "",
-    val type: String = "",
-    val count_series: String = "",
-    val count_goods: String = "",
+    val id: String = "id",
     val name: String = ""
 )

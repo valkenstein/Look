@@ -4,9 +4,10 @@ import com.aldredo.core.base.di.CoreComponent
 import com.aldredo.look.presentation.activity.MainActivity
 import dagger.Component
 
-@TaskWindowScope
+@ActivityScope
 @Component(
-    dependencies = [CoreComponent::class]
+    dependencies = [CoreComponent::class],
+    modules = [ApiModule::class]
 )
 interface ActivityComponent {
     fun inject(app: MainActivity)
@@ -19,14 +20,4 @@ interface ActivityComponent {
                 .build()
 
     }
-
-//    @Component.Builder
-//    interface Builder {
-//        @BindsInstance
-//        fun setActivity(context: Context): Builder
-//
-//        fun setAppComponent(app: AppComponent): Builder
-//
-//        fun build(): ActivityComponent
-//    }
 }

@@ -40,6 +40,6 @@ class OkHttpClientModule {
 
 
     companion object {
-        private const val DOMAIN = "https://development.lookit.hk/api/test"
+        private const val DOMAIN = "https://development.lookit.hk/api/test/"
     }
 }

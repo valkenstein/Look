@@ -1,3 +1,3 @@
 package com.aldredo.look.data.model
 
-data class ProfileModel(val title: String?)
+data class ProfileModel(val name: String?)

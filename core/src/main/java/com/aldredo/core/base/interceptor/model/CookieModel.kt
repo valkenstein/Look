@@ -1,3 +1,3 @@
 package com.aldredo.core.base.interceptor.model
 
-data class CookieModel(val id: String = "_id", val key: String = "")
+data class CookieModel(val id: String = "sid", val key: String = "")

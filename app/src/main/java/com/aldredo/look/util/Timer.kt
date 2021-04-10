@@ -5,8 +5,7 @@ import kotlinx.coroutines.*
 class Timer(private val second: Long) {
     private var pause = false
     private var runing = false
-    private val job = SupervisorJob()
-    private val scope = CoroutineScope(Dispatchers.Default + job)
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private var subscriber: TimerSubscriber? = null
 
     fun addSubscriber(subscriber: TimerSubscriber) {
@@ -19,11 +18,13 @@ class Timer(private val second: Long) {
 
     private fun startCoroutineTimer() = scope.launch {
         while (true) {
-            scope.launch(Dispatchers.Main) {
-                subscriber?.tick()
-            }
+            mainThread()
             delay(second * 1000)
         }
+    }
+
+    private fun mainThread() = scope.launch(Dispatchers.Main) {
+        subscriber?.tick()
     }
 
     fun startTimer() {

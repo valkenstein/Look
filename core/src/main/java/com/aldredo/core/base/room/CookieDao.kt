@@ -4,15 +4,12 @@ import androidx.room.*
 import com.aldredo.core.base.room.entity.CookieEntity
 
 @Dao
-interface CellsDao {
+interface CookieDao {
     @Query("SELECT * FROM CookieEntity")
     fun getAll(): List<CookieEntity?>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(cells: List<CookieEntity>?)
-
-    @Query("SELECT * FROM CookieEntity WHERE barcode LIKE :searchBarcode")
-    fun searchBarcode(searchBarcode: String): CookieEntity?
+    fun insert(cookie: CookieEntity?)
 
     @Delete
     fun delete(cookie: CookieEntity?)

@@ -5,38 +5,38 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import com.aldredo.look.R
+import com.aldredo.look.di.ActivityComponent
+import com.aldredo.look.presentation.mvvm.LookViewModel
 import com.aldredo.look.util.Timer
 import com.aldredo.look.util.TimerSubscriber
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), TimerSubscriber {
-    val t = Timer(1)
+
+    @Inject
+    lateinit var lookViewModel: LookViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        t.addSubscriber(this)
-        findViewById<Button>(R.id.start).setOnClickListener {
-            t.startTimer()
-        }
-        findViewById<Button>(R.id.stop).setOnClickListener {
-            t.cancelTimer()
-        }
+        ActivityComponent.create(this).inject(this)
     }
 
     override fun tick() {
-        print("")
         Log.e("MainActivity", "tick")
     }
 
     override fun onPause() {
-        t.pause()
+        lookViewModel.onPause()
         super.onPause()
     }
 
     override fun onResume() {
-        val b = t.isPause()
-        if (b)
-            t.startTimer()
+        lookViewModel.onResume()
         super.onResume()
+    }
+
+    override fun onDestroy() {
+        lookViewModel.onDestroy()
+        super.onDestroy()
     }
 }
