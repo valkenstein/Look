@@ -9,7 +9,7 @@ class CodeRepository constructor(private val codeApi: CodeApi) {
     suspend fun putCode(code: String): StateCode {
         return try {
             val hashMap = HashMap<String, String>().apply {
-                this["_id"] = code
+                put("_id", code)
             }
             val result = codeApi.putCode(hashMap)
             when (result.code()) {

@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import com.aldredo.look.R
 import com.aldredo.look.di.ActivityComponent
 import com.aldredo.look.presentation.mvvm.LookViewModel
@@ -19,6 +21,18 @@ class MainActivity : AppCompatActivity(), TimerSubscriber {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ActivityComponent.create(this).inject(this)
+
+        lookViewModel.getCodeValue().observe(this, {
+            findViewById<TextView>(R.id.code).text = it
+        })
+
+        lookViewModel.getMessageError().observe(this, {
+            toast(it)
+        })
+    }
+
+    private fun toast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
     override fun tick() {

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(indices = [Index(value = arrayOf("barcode"), unique = true)])
+@Entity
 data class CookieEntity(
     @PrimaryKey()
     val id: String = "id",
