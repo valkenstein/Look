@@ -11,10 +11,10 @@ class ProfileRepository @Inject constructor(private val profileApi: ProfileApi) 
         return try {
             val profile = profileApi.getProfile()
             //    if (profile.code() == 204) {
-            StateProfile.Error(ProfileMapping.mappingToDto(profile.body()))
+            StateProfile.Result(ProfileMapping.mappingToDto(profile.body()))
             //  }
         } catch (e: Exception) {
-            StateProfile.Empty(e.message.toString())
+            StateProfile.Error(e.message.toString())
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.aldredo.look.domain.state.StateCode
+import com.aldredo.look.domain.state.StateProfile
 import com.aldredo.look.domain.state.StateScreenBd
 import com.aldredo.look.domain.state.StateServer
 import com.aldredo.look.domain.usecase.CodeUseCase
@@ -90,7 +91,14 @@ class LookViewModel @Inject constructor(
     private fun saveCookie(cookie: String) = scope.launch {
         timer.cancelTimer()
         saveCookieToBdAsync(cookie)
-        getProfileAsync()
+        when (val stateProfile = getProfileAsync()) {
+            is StateProfile.Result -> {
+                showTitle.postValue(stateProfile.result.name)
+            }
+            is StateProfile.Error -> {
+                errorMessage.postValue(stateProfile.message)
+            }
+        }
     }
 
     private suspend fun saveCookieToBdAsync(cookie: String) = withContext(Dispatchers.IO) {

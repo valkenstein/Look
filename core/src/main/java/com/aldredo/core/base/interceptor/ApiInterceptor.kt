@@ -21,7 +21,7 @@ class ApiInterceptor @Inject constructor(
                 .build()
 
             newBuilder()
-                .header(cookieModel.id, cookieModel.key)
+                .header(cookieModel.id, cookieModel.value)
                 .url(urlWithApiKey)
                 .build()
         }
