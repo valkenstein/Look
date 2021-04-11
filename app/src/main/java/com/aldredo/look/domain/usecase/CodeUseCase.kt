@@ -5,7 +5,5 @@ import com.aldredo.look.domain.state.StateCode
 import javax.inject.Inject
 
 class CodeUseCase @Inject constructor(private val codeRepository: CodeRepository) {
-    suspend fun putCode(code: String): StateCode {
-        return codeRepository.putCode(code)
-    }
+    suspend fun putCode(code: String) = codeRepository.putCode(code)
 }

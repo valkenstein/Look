@@ -14,5 +14,5 @@ class ProfileUseCase @Inject constructor(
 
     suspend fun getProfileBd() = profileBdRepository.getProfileScreenToBd()
 
-    suspend fun setProfileScreen(name: String) = profileBdRepository.setProfileScreenToBd(name)
+    fun saveCookieToBd(cookie: String) = profileBdRepository.setProfileScreenToBd(cookie)
 }

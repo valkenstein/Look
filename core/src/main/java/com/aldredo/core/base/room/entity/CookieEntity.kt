@@ -8,5 +8,5 @@ import androidx.room.PrimaryKey
 data class CookieEntity(
     @PrimaryKey()
     val id: String = "id",
-    val name: String = ""
+    val cookie: String = ""
 )

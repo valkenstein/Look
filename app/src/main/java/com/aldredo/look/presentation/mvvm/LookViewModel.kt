@@ -1,8 +1,10 @@
 package com.aldredo.look.presentation.mvvm
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.aldredo.look.domain.state.StateCode
 import com.aldredo.look.domain.state.StateScreenBd
 import com.aldredo.look.domain.state.StateServer
 import com.aldredo.look.domain.usecase.CodeUseCase
@@ -19,17 +21,19 @@ class LookViewModel @Inject constructor(
     private val codeUseCase: CodeUseCase,
     private val profileUseCase: ProfileUseCase,
 ) : ViewModel(), TimerSubscriber {
-    private val timer = Timer(1)
+    private val timer = Timer(10)
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private val errorMessage = MutableLiveData<String>()
-    private val code = MutableLiveData<String>()
+    private val showTitle = MutableLiveData<String>()
+    private var generationCode: String
 
-    fun getCodeValue(): LiveData<String> = code
+    fun getCodeValue(): LiveData<String> = showTitle
     fun getMessageError(): LiveData<String> = errorMessage
 
     init {
         timer.addSubscriber(this)
+        generationCode = generationCode().toString()
         checkStateServer()
     }
 
@@ -45,13 +49,12 @@ class LookViewModel @Inject constructor(
     }
 
     private suspend fun addScreen() {
-        when (val screenBd = checkScreenToBd()) {
+        when (val stateScreenBd = checkScreenToBd()) {
             is StateScreenBd.Result -> {
-                code.postValue(screenBd.result.name)
+                showTitle.postValue(stateScreenBd.result.name)
             }
             is StateScreenBd.Empty -> {
-                val generationCode = generationCode().toString()
-                code.postValue(generationCode)
+                showTitle.postValue(generationCode)
                 timer.startTimer()
             }
         }
@@ -62,7 +65,40 @@ class LookViewModel @Inject constructor(
     }
 
     override fun tick() {
-        codeUseCase.putCode()
+        scope.launch {
+            sendCodeToServerAsync(generationCode)
+        }
+    }
+
+    private suspend fun sendCodeToServerAsync(code: String) =
+        withContext(Dispatchers.IO) {
+            when (val stateCode = codeUseCase.putCode(code)) {
+                is StateCode.Result -> {
+                    saveCookie(stateCode.result._id)
+                }
+                is StateCode.Error -> {
+                    generationCode = generationCode().toString()
+                    showTitle.postValue(generationCode)
+                    errorMessage.postValue(stateCode.message + " - генерация нового кода")
+                }
+                is StateCode.Success -> {
+                    Log.d("LookViewModel", "ждем подтверждения кода")
+                }
+            }
+        }
+
+    private fun saveCookie(cookie: String) = scope.launch {
+        timer.cancelTimer()
+        saveCookieToBdAsync(cookie)
+        getProfileAsync()
+    }
+
+    private suspend fun saveCookieToBdAsync(cookie: String) = withContext(Dispatchers.IO) {
+        profileUseCase.saveCookieToBd(cookie)
+    }
+
+    private suspend fun getProfileAsync() = withContext(Dispatchers.IO) {
+        profileUseCase.getProfileServer()
     }
 
     private fun generationCode() = Random.nextInt(100000, 999999)
@@ -81,6 +117,7 @@ class LookViewModel @Inject constructor(
     }
 
     fun onDestroy() {
+        timer.cancelTimer()
         timer.removeSubscriber()
     }
 }

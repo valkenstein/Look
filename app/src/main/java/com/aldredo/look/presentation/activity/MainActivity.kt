@@ -23,11 +23,25 @@ class MainActivity : AppCompatActivity(), TimerSubscriber {
         setContentView(R.layout.activity_main)
         ActivityComponent.create(this).inject(this)
 
-        lookViewModel.getCodeValue().observe(this, Observer{
-            findViewById<TextView>(R.id.code).text = it
+
+        findViewById<Button>(R.id.left).setOnClickListener {
+            lookViewModel.onPause()
+        }
+
+        findViewById<Button>(R.id.center).setOnClickListener {
+            lookViewModel.onResume()
+        }
+
+        findViewById<Button>(R.id.right).setOnClickListener {
+            lookViewModel.onDestroy()
+        }
+
+        val codeTextView = findViewById<TextView>(R.id.code)
+        lookViewModel.getCodeValue().observe(this, Observer {
+            codeTextView.text = it
         })
 
-        lookViewModel.getMessageError().observe(this, Observer{
+        lookViewModel.getMessageError().observe(this, Observer {
             toast(it)
         })
     }

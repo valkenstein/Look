@@ -4,8 +4,9 @@ import com.aldredo.look.data.api.ProfileApi
 import com.aldredo.look.data.mapping.ProfileMapping
 import com.aldredo.look.domain.state.StateProfile
 import java.lang.Exception
+import javax.inject.Inject
 
-class ProfileRepository constructor(private val profileApi: ProfileApi) {
+class ProfileRepository @Inject constructor(private val profileApi: ProfileApi) {
     suspend fun getProfileScreen(): StateProfile {
         return try {
             val profile = profileApi.getProfile()
