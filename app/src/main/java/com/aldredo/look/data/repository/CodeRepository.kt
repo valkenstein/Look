@@ -22,7 +22,7 @@ class CodeRepository @Inject constructor(
                 StateCode.Success
             }
             200 -> {
-                Log.e("ProfileRepository", cookieModel.value)
+                Log.e("cookieModel.value", result.body()?.result?._id.toString())
                 StateCode.Result(CodeMapping.mappingCodeToDto(result.body()))
             }
             else -> {

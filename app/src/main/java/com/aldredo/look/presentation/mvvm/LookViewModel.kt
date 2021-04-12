@@ -52,10 +52,7 @@ class LookViewModel @Inject constructor(
     private suspend fun addScreen() {
         when (val stateScreenBd = checkScreenToBd()) {
             is StateScreenBd.Result -> {
-//                showTitle.postValue(stateScreenBd.result.cookie)
-//                profileUseCase.getProfileServer()
-                showTitle.postValue(generationCode)
-                timer.startTimer()
+                getProfile()
             }
             is StateScreenBd.Empty -> {
                 showTitle.postValue(generationCode)
@@ -78,7 +75,10 @@ class LookViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             when (val stateCode = codeUseCase.putCode(code)) {
                 is StateCode.Result -> {
-                    saveCookie(stateCode.result._id)
+                    val cookie = stateCode.result._id
+                    timerCancel()
+                    profileUseCase.saveCookieToBd(cookie)
+                    getProfile()
                 }
                 is StateCode.Error -> {
                     generationCode = generationCode().toString()
@@ -91,9 +91,11 @@ class LookViewModel @Inject constructor(
             }
         }
 
-    private fun saveCookie(cookie: String) = scope.launch {
+    private suspend fun timerCancel() = withContext(Dispatchers.Main) {
         timer.cancelTimer()
-        saveCookieToBdAsync(cookie)
+    }
+
+    private fun getProfile() = scope.launch {
         when (val stateProfile = getProfileAsync()) {
             is StateProfile.Result -> {
                 showTitle.postValue(stateProfile.result.cookie)
@@ -104,9 +106,6 @@ class LookViewModel @Inject constructor(
         }
     }
 
-    private suspend fun saveCookieToBdAsync(cookie: String) = withContext(Dispatchers.IO) {
-        profileUseCase.saveCookieToBd(cookie)
-    }
 
     private suspend fun getProfileAsync() = withContext(Dispatchers.IO) {
         profileUseCase.getProfileServer()
