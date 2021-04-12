@@ -1,6 +1,6 @@
 package com.aldredo.core.base.di
 
-import com.aldredo.core.base.interceptor.model.CookieModel
+import com.aldredo.core.base.interceptor.model.CookieHeader
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class CookieModule {
     @Provides
     @Singleton
-    fun provideManagerToken(): CookieModel {
-        return CookieModel()
+    fun provideManagerToken(): CookieHeader {
+        return CookieHeader()
     }
 }

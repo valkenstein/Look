@@ -50,7 +50,7 @@ class LookViewModel @Inject constructor(
     }
 
     private suspend fun addScreen() {
-        when (val stateScreenBd = checkScreenToBd()) {
+        when (checkScreenToBd()) {
             is StateScreenBd.Result -> {
                 getProfile()
             }
@@ -75,7 +75,7 @@ class LookViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             when (val stateCode = codeUseCase.putCode(code)) {
                 is StateCode.Result -> {
-                    val cookie = stateCode.result._id
+                    val cookie = stateCode.result.cookie
                     timerCancel()
                     profileUseCase.saveCookieToBd(cookie)
                     getProfile()

@@ -1,3 +1,3 @@
 package com.aldredo.look.domain.dto
 
-data class CodeDto(val _id: String)
+data class CodeDto(val _id: String, val cookie: String)

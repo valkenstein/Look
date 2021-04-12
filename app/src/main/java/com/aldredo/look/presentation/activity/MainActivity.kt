@@ -15,7 +15,7 @@ import com.aldredo.look.util.Timer
 import com.aldredo.look.util.TimerSubscriber
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), TimerSubscriber {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var lookViewModel: LookViewModel
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), TimerSubscriber {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ActivityComponent.create(this).inject(this)
-      //  lookViewModel TODO(21)
+        //  lookViewModel TODO(21)
         //lookViewModel = ViewModelProviders.of(this, ModelFactory(lookViewModel)).get(lookViewModel::class.java)
         findViewById<Button>(R.id.left).setOnClickListener {
             lookViewModel.onPause()
@@ -49,10 +49,6 @@ class MainActivity : AppCompatActivity(), TimerSubscriber {
 
     private fun toast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun tick() {
-        Log.e("MainActivity", "tick")
     }
 
     override fun onPause() {

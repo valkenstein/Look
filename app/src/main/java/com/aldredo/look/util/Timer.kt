@@ -4,7 +4,7 @@ import kotlinx.coroutines.*
 
 class Timer(private val second: Long) {
     private var pause = false
-    private var runing = false
+    private var startTimer = false
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private var subscriber: TimerSubscriber? = null
 
@@ -28,22 +28,22 @@ class Timer(private val second: Long) {
     }
 
     fun startTimer() {
-        runing = true
+        startTimer = true
         startCoroutineTimer()
     }
 
     fun cancelTimer() {
         pause = false
-        runing = false
+        startTimer = false
         scope.coroutineContext.cancelChildren()
     }
 
     fun pause() {
-        if (runing) {
+        if (startTimer) {
             pause = true
             scope.coroutineContext.cancelChildren()
         }
     }
 
-    fun isPause() = runing and pause
+    fun isPause() = startTimer and pause
 }

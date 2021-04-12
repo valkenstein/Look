@@ -1,7 +1,5 @@
 package com.aldredo.look.data.repository
 
-import android.util.Log
-import com.aldredo.core.base.interceptor.model.CookieModel
 import com.aldredo.look.data.api.CodeApi
 import com.aldredo.look.data.mapping.CodeMapping
 import com.aldredo.look.domain.state.StateCode
@@ -9,8 +7,7 @@ import java.lang.Exception
 import javax.inject.Inject
 
 class CodeRepository @Inject constructor(
-    private val codeApi: CodeApi,
-    private val cookieModel: CookieModel
+    private val codeApi: CodeApi
 ) {
     suspend fun putCode(code: String) = try {
         val hashMap = HashMap<Any, Any>().apply {
@@ -22,8 +19,8 @@ class CodeRepository @Inject constructor(
                 StateCode.Success
             }
             200 -> {
-                Log.e("cookieModel.value", result.body()?.result?._id.toString())
-                StateCode.Result(CodeMapping.mappingCodeToDto(result.body()))
+                val cookie = result.headers()["Set-Cookie"]
+                StateCode.Result(CodeMapping.mappingCodeToDto(result.body(), cookie))
             }
             else -> {
                 StateCode.Error("ошибка сервера")
