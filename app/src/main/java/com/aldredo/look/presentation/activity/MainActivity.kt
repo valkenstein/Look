@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.aldredo.core.base.mvvm.ModelFactory
 import com.aldredo.look.R
 import com.aldredo.look.di.ActivityComponent
 import com.aldredo.look.presentation.mvvm.LookViewModel
@@ -22,8 +23,8 @@ class MainActivity : AppCompatActivity(), TimerSubscriber {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ActivityComponent.create(this).inject(this)
-
-
+        lookViewModel TODO(21)
+        //lookViewModel = ViewModelProviders.of(this, ModelFactory(lookViewModel)).get(lookViewModel::class.java)
         findViewById<Button>(R.id.left).setOnClickListener {
             lookViewModel.onPause()
         }

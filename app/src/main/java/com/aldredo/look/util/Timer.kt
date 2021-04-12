@@ -1,6 +1,5 @@
 package com.aldredo.look.util
 
-import android.util.Log
 import kotlinx.coroutines.*
 
 class Timer(private val second: Long) {
@@ -19,7 +18,6 @@ class Timer(private val second: Long) {
 
     private fun startCoroutineTimer() = scope.launch {
         while (true) {
-            Log.e("Timer","startCoroutineTimer")
             mainThread()
             delay(second * 1000)
         }
