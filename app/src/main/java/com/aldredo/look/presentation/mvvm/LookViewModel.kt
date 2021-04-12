@@ -106,7 +106,6 @@ class LookViewModel @Inject constructor(
         }
     }
 
-
     private suspend fun getProfileAsync() = withContext(Dispatchers.IO) {
         profileUseCase.getProfileServer()
     }
