@@ -10,5 +10,5 @@ import com.aldredo.core.base.room.entity.CookieEntity
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun  cookieDao(): CookieDao?
+    abstract fun cookieDao(): CookieDao?
 }

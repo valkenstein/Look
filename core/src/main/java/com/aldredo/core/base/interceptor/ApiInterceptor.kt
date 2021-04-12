@@ -21,6 +21,7 @@ class ApiInterceptor @Inject constructor(
                 .build()
 
             newBuilder()
+                //.addHeader("Cookie","sid=device:60741db0ac20a32eea5ef2bb:794a1b84")
                 .header(cookieModel.id, cookieModel.value)
                 .url(urlWithApiKey)
                 .build()

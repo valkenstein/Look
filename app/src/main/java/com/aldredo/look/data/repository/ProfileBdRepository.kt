@@ -16,6 +16,7 @@ class ProfileBdRepository @Inject constructor(
         return try {
             val lastItem = bd.cookieDao()?.getAll()?.last()
             if (lastItem?.cookie != null) {
+                //cookieModel.value = lastItem.cookie
                 StateScreenBd.Result(ProfileDto(lastItem.cookie))
             } else
                 StateScreenBd.Empty("база пуста")
@@ -25,7 +26,7 @@ class ProfileBdRepository @Inject constructor(
     }
 
     fun setProfileScreenToBd(cookie: String) {
-        cookieModel.value = cookie
+        //cookieModel.value = cookie
         bd.cookieDao()?.insert(CookieEntity(cookie = cookie))
     }
 }

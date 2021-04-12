@@ -52,7 +52,10 @@ class LookViewModel @Inject constructor(
     private suspend fun addScreen() {
         when (val stateScreenBd = checkScreenToBd()) {
             is StateScreenBd.Result -> {
-                showTitle.postValue(stateScreenBd.result.name)
+//                showTitle.postValue(stateScreenBd.result.cookie)
+//                profileUseCase.getProfileServer()
+                showTitle.postValue(generationCode)
+                timer.startTimer()
             }
             is StateScreenBd.Empty -> {
                 showTitle.postValue(generationCode)
@@ -93,7 +96,7 @@ class LookViewModel @Inject constructor(
         saveCookieToBdAsync(cookie)
         when (val stateProfile = getProfileAsync()) {
             is StateProfile.Result -> {
-                showTitle.postValue(stateProfile.result.name)
+                showTitle.postValue(stateProfile.result.cookie)
             }
             is StateProfile.Error -> {
                 errorMessage.postValue(stateProfile.message)

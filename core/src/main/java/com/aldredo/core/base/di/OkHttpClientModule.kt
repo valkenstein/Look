@@ -1,8 +1,10 @@
 package com.aldredo.core.base.di
 
 import com.aldredo.core.base.interceptor.ApiInterceptor
+import com.aldredo.core.base.interceptor.MyCookieJar
 import dagger.Module
 import dagger.Provides
+import okhttp3.CookieJar
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -18,11 +20,16 @@ class OkHttpClientModule {
 
     @Provides
     @Singleton
-    fun provideHttpClientAuth(dispatcher: Dispatcher, interceptor: ApiInterceptor): OkHttpClient {
+    fun provideHttpClientAuth(
+        dispatcher: Dispatcher,
+        interceptor: ApiInterceptor,
+        cookieJar: CookieJar
+    ): OkHttpClient {
         return OkHttpClient
             .Builder()
             .addInterceptor(interceptor)
             .dispatcher(dispatcher)
+            .cookieJar(cookieJar)
             .readTimeout(120, TimeUnit.SECONDS)
             .connectTimeout(120, TimeUnit.SECONDS)
             .writeTimeout(120, TimeUnit.SECONDS)
@@ -37,6 +44,12 @@ class OkHttpClientModule {
             .client(okHttpClientAuth)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
+    @Provides
+    @Singleton
+    fun provideCookieJar(): CookieJar {
+        return MyCookieJar()
+    }
 
 
     companion object {

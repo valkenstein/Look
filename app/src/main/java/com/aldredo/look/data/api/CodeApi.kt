@@ -7,5 +7,5 @@ import retrofit2.http.POST
 
 interface CodeApi {
     @POST("code")
-    suspend fun putCode(@Body bodyRequest: HashMap<String, String>): Response<CodeModel>
+    suspend fun putCode(@Body bodyRequest: HashMap<Any, Any>): Response<CodeModel>
 }
