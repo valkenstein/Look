@@ -1,9 +1,9 @@
-package com.aldredo.look.data.mapping
+package com.aldredo.look.data.mapper
 
 import com.aldredo.look.data.model.CodeModel
 import com.aldredo.look.domain.dto.CodeDto
 
-object CodeMapping {
+object CodeMapper {
     fun mappingCodeToDto(codeModel: CodeModel?, cookie: String?): CodeDto {
         return CodeDto(codeModel?.result?._id ?: "", cookie ?: "")
     }

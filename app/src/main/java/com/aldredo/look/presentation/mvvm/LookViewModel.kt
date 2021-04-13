@@ -56,7 +56,7 @@ class LookViewModel @Inject constructor(
             }
             is StateScreenBd.Empty -> {
                 showTitle.postValue(generationCode)
-                timer.startTimer()
+                timer.start()
             }
         }
     }
@@ -92,7 +92,7 @@ class LookViewModel @Inject constructor(
         }
 
     private suspend fun timerCancel() = withContext(Dispatchers.Main) {
-        timer.cancelTimer()
+        timer.cancel()
     }
 
     private fun getProfile() = scope.launch {
@@ -118,7 +118,7 @@ class LookViewModel @Inject constructor(
 
     fun onResume() {
         if (timer.isPause())
-            timer.startTimer()
+            timer.start()
     }
 
     fun onPause() {
@@ -126,7 +126,7 @@ class LookViewModel @Inject constructor(
     }
 
     fun onDestroy() {
-        timer.cancelTimer()
+        timer.cancel()
         timer.removeSubscriber()
     }
 }

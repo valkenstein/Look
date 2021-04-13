@@ -1,7 +1,7 @@
 package com.aldredo.look.data.repository
 
 import com.aldredo.look.data.api.ProfileApi
-import com.aldredo.look.data.mapping.ProfileMapping
+import com.aldredo.look.data.mapper.ProfileMapper
 import com.aldredo.look.domain.state.StateProfile
 import java.lang.Exception
 import javax.inject.Inject
@@ -13,7 +13,7 @@ class ProfileRepository @Inject constructor(
         return try {
             val profile = profileApi.getProfile()
             if (profile.code() == 200) {
-                StateProfile.Result(ProfileMapping.mappingToDto(profile.body()))
+                StateProfile.Result(ProfileMapper.mappingToDto(profile.body()))
             } else
                 StateProfile.Error(profile.body().toString())
 

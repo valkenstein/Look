@@ -8,12 +8,6 @@ class MyCookieJar : CookieJar {
     private var cookies: List<Cookie> = listOf()
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
         this.cookies = cookies
-//        cookies.add(
-//            Cookie.Builder()
-//                .name("")
-//                .value("")
-//                .build()
-//        )
     }
 
     override fun loadForRequest(url: HttpUrl): List<Cookie> {

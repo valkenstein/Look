@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Look</string>
+    <string name="init">ИНИЦИАЛИЗАЦИЯ</string>
 </resources>

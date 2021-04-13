@@ -27,12 +27,12 @@ class Timer(private val second: Long) {
         subscriber?.tick()
     }
 
-    fun startTimer() {
+    fun start() {
         startTimer = true
         startCoroutineTimer()
     }
 
-    fun cancelTimer() {
+    fun cancel() {
         pause = false
         startTimer = false
         scope.coroutineContext.cancelChildren()

@@ -1,7 +1,7 @@
 package com.aldredo.look.data.repository
 
 import com.aldredo.look.data.api.CodeApi
-import com.aldredo.look.data.mapping.CodeMapping
+import com.aldredo.look.data.mapper.CodeMapper
 import com.aldredo.look.domain.state.StateCode
 import java.lang.Exception
 import javax.inject.Inject
@@ -20,7 +20,7 @@ class CodeRepository @Inject constructor(
             }
             200 -> {
                 val cookie = result.headers()["Set-Cookie"]
-                StateCode.Result(CodeMapping.mappingCodeToDto(result.body(), cookie))
+                StateCode.Result(CodeMapper.mappingCodeToDto(result.body(), cookie))
             }
             else -> {
                 StateCode.Error("ошибка сервера")

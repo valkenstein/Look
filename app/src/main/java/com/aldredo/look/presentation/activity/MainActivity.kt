@@ -2,17 +2,13 @@ package com.aldredo.look.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.aldredo.core.base.mvvm.ModelFactory
 import com.aldredo.look.R
 import com.aldredo.look.di.ActivityComponent
 import com.aldredo.look.presentation.mvvm.LookViewModel
-import com.aldredo.look.util.Timer
-import com.aldredo.look.util.TimerSubscriber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -23,19 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ActivityComponent.create(this).inject(this)
-        //  lookViewModel TODO(21)
-        //lookViewModel = ViewModelProviders.of(this, ModelFactory(lookViewModel)).get(lookViewModel::class.java)
-        findViewById<Button>(R.id.left).setOnClickListener {
-            lookViewModel.onPause()
-        }
-
-        findViewById<Button>(R.id.center).setOnClickListener {
-            lookViewModel.onResume()
-        }
-
-        findViewById<Button>(R.id.right).setOnClickListener {
-            lookViewModel.onDestroy()
-        }
+        lookViewModel =  ViewModelProvider(this, ModelFactory(lookViewModel)).get(lookViewModel::class.java)
 
         val codeTextView = findViewById<TextView>(R.id.code)
         lookViewModel.getCodeValue().observe(this, {
