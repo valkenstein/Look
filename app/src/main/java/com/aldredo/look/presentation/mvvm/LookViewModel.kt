@@ -27,14 +27,14 @@ class LookViewModel @Inject constructor(
 
     private val errorMessage = MutableLiveData<String>()
     private val showTitle = MutableLiveData<String>()
-    private var generationCode: String
+    private var generationCode: String = generationCode().toString()
 
     fun getCodeValue(): LiveData<String> = showTitle
     fun getMessageError(): LiveData<String> = errorMessage
 
-    init {
+
+    fun init() {
         timer.addSubscriber(this)
-        generationCode = generationCode().toString()
         checkStateServer()
     }
 

@@ -19,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ActivityComponent.create(this).inject(this)
-        lookViewModel =  ViewModelProvider(this, ModelFactory(lookViewModel)).get(lookViewModel::class.java)
+        lookViewModel =
+            ViewModelProvider(this, ModelFactory(lookViewModel)).get(lookViewModel::class.java)
 
         val codeTextView = findViewById<TextView>(R.id.code)
         lookViewModel.getCodeValue().observe(this, {
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         lookViewModel.getMessageError().observe(this, {
             toast(it)
         })
+        lookViewModel.init()
     }
 
     private fun toast(text: String) {
